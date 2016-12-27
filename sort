@@ -1,0 +1,114 @@
+array = []
+
+for i in range(10):
+	array.append(i)
+
+length_global = len(array)
+
+def display(list):
+	length= len(list)
+	for i in range (length):
+		print ("%d %d" % (i, list[i]))
+
+from random import randint
+def randomizer(list):
+	length= len(list)
+	for i in range (length):
+		list[i]= randint(-1000000, 1000000)
+	return list
+
+def bubble_sort(list):
+	length= len(list)
+	for i in range(length-1):
+		for j in range(length-1):
+			if list[j] > list[j+1]:
+				temp = list[j]
+				list[j], list[j+1] = list[j+1], temp
+
+def bubble_sort_while(list):
+	length = len(list)
+	swap = True
+	while swap == True:
+		swap = False
+		for i in range(0, length-1):
+			if list[i] > list[i+1]:
+				temp = list[i]
+				list[i], list[i+1] = list[i+1], temp
+				swap = True
+
+#utilizes the knowledge that with each iteration, the maximum number "bubbles" to the top
+def bubble_sort_smart(list):
+	length = len(list)
+	for i in range(length-1):
+		for j in range(0, length-i-1):
+			if list[j] > list[j+1]:
+				temp = list[j]
+				list[j], list[j+1] = list[j+1], temp
+
+
+import pprint
+
+def finder_sort(list):
+	length = len(list)
+	for i in range(0, length-1):
+		min, temp, index = list[i], list[i], i
+		for j in range(i, length):
+			if list[j] < min:
+				min, index = list[j], j
+				#print (min)
+		list[i], list[index] = min, temp
+		#pprint.pprint(list) used for debugging purposes
+	
+
+
+def accuracy_check(list):
+	is_sorted = True
+	length = len(list)
+	for i in range(length-1):
+		if list[i] > list[i+1]:
+			is_sorted = False 
+	print (is_sorted)
+
+
+import time
+
+class my_Timer:
+	def __init__(self):
+		self.data= []
+		self.count = 0
+		self.start_time = 0
+	def add(self,x):
+		self.data.append(x)
+		self.count +=1
+	def start(self):
+		self.start_time = time.time()
+	def end(self):
+		end = time.time()
+		delta = end - self.start_time
+		self.data.append(delta)
+		self.count+=1
+	def average(self):
+		sum = 0
+		for x in self.data:
+			sum += x
+		a = sum/self.count
+		print ("average is %f" % (a))
+		return a
+
+
+def procedure(list, n):
+	x= my_Timer()
+	for i in range(n):
+		randomizer(list)
+		x.start()
+		finder_sort(list)
+		x.end()
+		accuracy_check(list)
+	x.average()
+
+
+
+
+
+	
+
